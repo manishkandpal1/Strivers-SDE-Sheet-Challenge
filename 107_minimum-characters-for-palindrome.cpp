@@ -1,0 +1,17 @@
+//https://www.codingninjas.com/studio/problems/minimum-characters-for-palindrome_8230737?challengeSlug=striver-sde-challenge
+
+#include<bits/stdc++.h>
+int minCharsforPalindrome(string str) {
+	int n = str.size();
+	int i = 0, j = n - 1, count = 0, tempJ = j;
+	while(i < j) {
+		if(str[i] == str[j])
+			i++, j--;
+		else {
+			count++;
+			i = 0, tempJ--;
+			j = tempJ;
+		}
+	}	
+	return count;
+}
