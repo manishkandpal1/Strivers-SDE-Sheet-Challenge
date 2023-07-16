@@ -1,66 +1,70 @@
 //https://www.codingninjas.com/studio/problems/day-25-queue-using-stack_8230722?challengeSlug=striver-sde-challenge
 
 #include<stack>
-
 class Queue {
-    private:
-    stack<int> input;
-    stack<int> output;
-    public:
-    Queue() {
-    }
+   stack<int>s1;
+   stack<int>s2;
+   int size;
+   
+   public:
+   Queue() {
+       size = 0;
+   }
 
-    void enQueue(int val) {
-        input.push(val);
-    }
+   void enQueue(int val) {
+       s1.push(val);
+       size++;
+   }
 
-    int deQueue() {
-        if(isEmpty()){
-            return -1;
-        }
-        else{
-            if(output.empty() && (!input.empty())){
-                while(!input.empty()){
-                    output.push(input.top());
-                    input.pop();
-                }
-                int x  = output.top();
-                output.pop();
-                return x;
-            }
+   int deQueue() { 
+       int ans;
+      if(!s2.empty()){
+          ans = s2.top();
+          s2.pop();
+      }
+      else{
+          while(!s1.empty()){
+               int val = s1.top();
+               s1.pop();
+               s2.push(val);   
+          }
+          if(!s2.empty()){
+              ans = s2.top();
+              s2.pop();
+          }
+          else{
+              return -1;
+          }
+      }
+       size--;
+       return ans;
+   }
 
-            else{
-                int x  = output.top();
-                output.pop();
-                return x;
-            }
-        }
-    }
+   int peek() {
+      if(!s2.empty()){
+          return s2.top();
+      }
+      else{
+          if(s1.empty()){
+              return -1;
+          }
+          else{
+              while(!s1.empty()){
+                  s2.push(s1.top());
+                  s1.pop();
+              }
+              return s2.top();
+          }
+      }
+   }
 
-    int peek() {
-       if(input.empty()){
-           return -1;
+
+   bool isEmpty() {
+       if(size == 0) {
+           return true;
        }
-
        else{
-           if(!output.empty()){
-               return output.top();
-           }
-
-           else{
-                while(input.empty() == false){
-                    output.push(input.top());
-                    input.pop();
-                }
-                return output.top();
-           }
+           return false;
        }
-    }
- 
-    bool isEmpty() {
-        return input.empty() && output.empty();
-    }
+   }
 };
-
- 
-
